@@ -11,7 +11,7 @@ export default {
     },
     methods: {
         clickFunction(e) {
-            this.$emit("toggle-add-task-form")
+            this.$emit("btn-click")
         }
     },
     emits: ["btn-click"]
