@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <Header @toggle-add-task-form="this.showAddTask = !this.showAddTask" :change_button="showAddTask" title="Task Tracker"></Header>
+    <Header @toggle-add-task-form="toggleAdd()" :change_button="showAddTask" title="Task Tracker"></Header>
     <div v-show="showAddTask">
       <AddTask @add-task="addTask"></AddTask>
     </div>
@@ -38,6 +38,9 @@ export default {
     setReminder(id/*, reminder*/){
         //this.tasks.find((task) => task.id === id).reminder = !reminder
         this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+    },
+    toggleAdd(){
+      this.showAddTask = !this.showAddTask
     }
   },
   created(){ //on page creation do:
