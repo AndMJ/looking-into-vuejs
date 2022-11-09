@@ -2,7 +2,7 @@
   <div class="container">
     <Header @toggle-add-task-form="toggleAdd()" :change_button="showAddTask" title="Task Tracker"></Header>
     <div v-show="showAddTask">
-      <AddTask @add-task="addTask"></AddTask>
+      <AddTaskForm @add-task="addTask"></AddTaskForm>
     </div>
     <Tasks @toggle-reminder="setReminder" @delete-task="deleteTask" :tasks="tasks"></Tasks>
   </div>
@@ -11,14 +11,14 @@
 <script>
 import Header from './components/Header'
 import Tasks from './components/Tasks'
-import AddTask from './components/AddTask'
+import AddTaskForm from './components/AddTaskForm'
 
 export default {
   name: 'App',
   components: {
     Header,
     Tasks,
-    AddTask
+    AddTaskForm
   },
   data() {
     return {

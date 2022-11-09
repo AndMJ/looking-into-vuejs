@@ -4,9 +4,9 @@
             <label>Task</label>
             <input type="text" v-model="text" name="text" placeholder="Add Task">
         </div>
-        <div class="form-control">
+        <div class="form-control"> 
             <label>Date</label>
-            <input type="text" v-model="date" name="date" placeholder="Add Date">
+            <input type="date" v-model="date" name="date" placeholder="dd/mm/yyyy">
         </div>
         <div class="form-control">
             <label>Set Reminder</label>
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-    name:"AddTask",
+    name:"AddTaskForm",
     data(){
         return {
             text: "",
