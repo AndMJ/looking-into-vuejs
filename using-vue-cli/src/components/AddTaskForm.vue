@@ -41,7 +41,7 @@ export default {
             }
 
             const newT = {
-                id: Math.floor(Math.random() * 4352),
+                //id: Math.floor(Math.random() * 4352),
                 text: this.text,
                 date: this.date,
                 reminder: this.reminder

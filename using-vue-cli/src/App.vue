@@ -46,37 +46,76 @@ export default {
     }
   },
   methods:{
-    addTask(newTask){
-      this.tasks.push(newTask)
+    async addTask(newTask){
+      const res = await fetch("http://localhost:5000/tasks", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(newTask)
+      })
+      const data = await res.json()
+
+      this.tasks.push(data)
     },
-    deleteTask(id){
+    async updateTask(id, dataToPatch){
+      const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+        method:"PATCH",
+        headers:{
+          "Content-type":"application/json"
+        },
+        body: JSON.stringify(dataToPatch)
+      })
+
+      const data = await res.json()
+
+      this.tasks = this.tasks.map((task) => task.id === id ? task = data : task)
+    },
+    async deleteTask(id){
       if(confirm("Delete?")){
-        this.tasks = this.tasks.filter((task) => task.id !== id)
+        const res = await fetch(`http://localhost:5000/tasks/${id}`, {
+          method: "DELETE"
+        })
+
+        res.status === 200 ? (this.tasks = this.tasks.filter((task) => task.id !== id)) : "Error deleting task"
       }
     },
-    setReminder(id/*, reminder*/){
-        //this.tasks.find((task) => task.id === id).reminder = !reminder
-        this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
+    async setReminder(id){
+        const taskToToggle = await this.getTaskById(id)
+        
+        const updTask = {
+          reminder: !taskToToggle.reminder
+        }
+
+        this.updateTask(id, updTask)
+        
+        //this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
     },
     toggleAddTaskForm(){
       this.showAddTask = !this.showAddTask
     },
-    addMarker(newMarker){
+    /*addMarker(newMarker){
       this.markers.push(newMarker)
       console.log(this.markers);
     },
     toggleAddMakerForm(){
       this.showAddMarker = !this.showAddMarker
-    },
-    async getTasks(){
+    },*/
+    async getAllTasks(){
       const res = await fetch("http://localhost:5000/tasks")
+      const data = await res.json()
+
+      return data
+    },
+    async getTaskById(id){
+      const res = await fetch(`http://localhost:5000/tasks/${id}`)
       const data = await res.json()
 
       return data
     }
   },
   async created(){ //on page creation do:
-    this.tasks = await this.getTasks()
+    this.tasks = await this.getAllTasks()
 
   }
 }
