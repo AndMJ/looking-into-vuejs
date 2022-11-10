@@ -90,17 +90,7 @@ export default {
         reminder: false
       }
     ]
-
-    this.markers = [
-      {
-        id: 1,
-        text: "sitio 1",
-        pos: {
-          lat: 51.5,
-          long: -0.09
-        }
-      }
-    ]
+    
   }
 }
 </script>
