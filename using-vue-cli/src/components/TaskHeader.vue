@@ -1,7 +1,7 @@
 <template>
     <header>
         <h1>{{title}}</h1>
-        <Button @btn-click="$emit('toggle-add-task-form')" :color="change_button ? 'darkred' : 'green'" :text="change_button ? 'Close Task' : 'Add Task'"></Button>
+        <Button @btn-click="$emit('toggle-header-body-tasks')" :color="change_button ? 'darkred' : 'green'" :text="change_button ? close_Button_text : add_Button_text"></Button>
     </header>
 </template>
 
@@ -9,15 +9,17 @@
 import Button from "./Button.vue"
 
 export default {
-    name:"Header",
+    name:"TaskHeader",
     props: {
         title: String,
-        change_button: Boolean
+        change_button: Boolean,
+        add_Button_text: String,
+        close_Button_text: String,
     },
     components: {
         Button
     },
-    emits:["toggle-add-task-form"]
+    emits:["toggle-header-body-tasks"]
 }
 </script>
 

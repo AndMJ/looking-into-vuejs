@@ -1,5 +1,5 @@
 <template>
-    <form @submit="newTask($event)" class="add-form">
+    <form @submit="newTask($event)" class="add-task-form">
         <div class="form-control">
             <label>Task</label>
             <input type="text" v-model="text" name="text" placeholder="Add Task">
