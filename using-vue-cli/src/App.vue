@@ -4,7 +4,7 @@
     <div v-show="showAddMarker">
       <AddMarkerForm @map-add-marker="addMarker"></AddMarkerForm>
     </div>
-    <Map :markers="markers"></Map>
+    <Map></Map>
 
     <br><br><br>
     

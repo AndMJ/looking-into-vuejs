@@ -1,23 +1,37 @@
 <template>
-    <div id="map" style="width: auto; height: 400px;"></div>
+    <l-map style="width: auto;height: 400px" :zoom="zoom" :center="center">
+        <l-tile-layer :url="url"></l-tile-layer>
+        <l-marker v-for="marker, index in markers" :lat-lng="marker"></l-marker>
+    </l-map>
 </template>
 
 
 <script>
-/* TODO: add marker to map*/
+import "leaflet/dist/leaflet.css"
+import { LMap, LMarker, LTileLayer } from "@vue-leaflet/vue-leaflet";
+
 export default {
     name:"Map",
-    props:{
-        markers: Array
+    components: {
+        LMap,
+        LMarker,
+        LTileLayer
     },
     data(){
         return {
+            zoom: 11,
             center: [51.505, -0.09],
-            map: null
+            url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            markers: [
+                [51.5, -0.09],
+                [51.8, -0.0955]
+            ]
+
+
         }
     },
     methods:{
-        setupLeafletMap(){
+        /*setupLeafletMap(){
             const map = L.map('map').setView(this.center, 11)
             
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
@@ -27,14 +41,8 @@ export default {
         loadAllMarkers(){
             for (let i in this.markers){
                 let newMarker = L.marker([this.markers[i].pos.lat,this.markers[i].pos.long]).addTo(this.map).bindPopup(this.markers[i].text) 
-                /*console.log(this.markers[i].pos.lat);*/
             }
-        }
-    },
-    mounted(){
-        this.setupLeafletMap()
-
-        this.loadAllMarkers()
+        }*/
     }
 }
 </script>
