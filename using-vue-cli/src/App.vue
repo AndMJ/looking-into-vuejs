@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <MarkerHeader @toggle-header-body-marker="toggleAddMakerForm()" :change_button="showAddMarker" title="My markers" add_Button_text="Add Marker" close_Button_text="Close"></MarkerHeader>
+    <!-- <MarkerHeader @toggle-header-body-marker="toggleAddMakerForm()" :change_button="showAddMarker" title="My markers" add_Button_text="Add Marker" close_Button_text="Close"></MarkerHeader>
     <div v-show="showAddMarker">
       <AddMarkerForm @map-add-marker="addMarker"></AddMarkerForm>
     </div>
     <Map></Map>
 
-    <br><br><br>
+    <br><br><br> -->
     
     <TaskHeader @toggle-header-body-tasks="toggleAddTaskForm()" :change_button="showAddTask" title="Task Tracker" add_Button_text="Add Task" close_Button_text="Close"></TaskHeader>
     <div v-show="showAddTask">
@@ -67,30 +67,17 @@ export default {
     },
     toggleAddMakerForm(){
       this.showAddMarker = !this.showAddMarker
+    },
+    async getTasks(){
+      const res = await fetch("http://localhost:5000/tasks")
+      const data = await res.json()
+
+      return data
     }
   },
-  created(){ //on page creation do:
-    this.tasks = [
-      {
-        id: 1,
-        text: "Fazer aquilo",
-        date: "1/1/2001",
-        reminder: true
-      },
-      {
-        id: 2,
-        text: "Ir ali",
-        date: "2/2/2001",
-        reminder: true
-      },
-      {
-        id: 3,
-        text: "Programar isto",
-        date: "3/3/2001",
-        reminder: false
-      }
-    ]
-    
+  async created(){ //on page creation do:
+    this.tasks = await this.getTasks()
+
   }
 }
 </script>
