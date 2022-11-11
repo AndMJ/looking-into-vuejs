@@ -1,69 +1,59 @@
 <template>
   <div class="container">
-    <Header @toggle-add-task-form="toggleAdd()" :change_button="showAddTask" title="Task Tracker"></Header>
-    <div v-show="showAddTask">
-      <AddTask @add-task="addTask"></AddTask>
+    <!-- <MarkerHeader @toggle-header-body-marker="toggleAddMakerForm()" :change_button="showAddMarker" title="My markers" add_Button_text="Add Marker" close_Button_text="Close"></MarkerHeader>
+    <div v-show="showAddMarker">
+      <AddMarkerForm @map-add-marker="addMarker"></AddMarkerForm>
     </div>
-    <Tasks @toggle-reminder="setReminder" @delete-task="deleteTask" :tasks="tasks"></Tasks>
+    <Map></Map>
+
+    <br><br><br> -->
+    
+    <TaskHeader @toggle-header-body-tasks="toggleAddTaskForm()" :button_change="showAddTask" title="Task Tracker" add_Button_text="Add Task" close_Button_text="Close"></TaskHeader>
+    <router-view :showAddTask="showAddTask"></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Header from './components/Header'
-import Tasks from './components/Tasks'
-import AddTask from './components/AddTask'
+/* tasks */
+import TaskHeader from './components/TaskHeader'
+
+/* markers */
+import MarkerHeader from './components/MarkerHeader'
+import AddMarkerForm from './components/AddMarkerForm'
+import Map from './components/Map'
+
+import Footer from "./components/Footer"
+import router from "./router"
 
 export default {
   name: 'App',
   components: {
-    Header,
-    Tasks,
-    AddTask
-  },
+    MarkerHeader,
+    Map,
+    AddMarkerForm,
+    TaskHeader,
+    Footer,
+    router
+},
   data() {
     return {
-      tasks: [],
-      showAddTask: false
+      showAddTask: false,
+      markers: [],
+      showAddMarker: false
     }
   },
   methods:{
-    addTask(newTask){
-      this.tasks.push(newTask)
-    },
-    deleteTask(id){
-      if(confirm("Delete?")){
-        this.tasks = this.tasks.filter((task) => task.id !== id)
-      }
-    },
-    setReminder(id/*, reminder*/){
-        //this.tasks.find((task) => task.id === id).reminder = !reminder
-        this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
-    },
-    toggleAdd(){
+    toggleAddTaskForm(){
       this.showAddTask = !this.showAddTask
-    }
-  },
-  created(){ //on page creation do:
-    this.tasks = [
-      {
-        id: 1,
-        text: "Fazer aquilo",
-        date: "1/1/2001",
-        reminder: true
-      },
-      {
-        id: 2,
-        text: "Ir ali",
-        date: "2/2/2001",
-        reminder: true
-      },
-      {
-        id: 3,
-        text: "Programar isto",
-        date: "3/3/2001",
-        reminder: false
-      }
-    ]
+    },
+    /*addMarker(newMarker){
+      this.markers.push(newMarker)
+      console.log(this.markers);
+    },
+    toggleAddMakerForm(){
+      this.showAddMarker = !this.showAddMarker
+    },*/
   }
 }
 </script>
