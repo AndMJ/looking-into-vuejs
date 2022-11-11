@@ -1,7 +1,7 @@
 <template>
     <header>
         <h1>{{title}}</h1>
-        <Button @btn-click="$emit('toggle-header-body-tasks')" :color="change_button ? 'darkred' : 'green'" :text="change_button ? close_Button_text : add_Button_text"></Button>
+        <Button v-show="isHome" @btn-click="$emit('toggle-header-body-tasks')" :color="button_change ? 'darkred' : 'green'" :text="button_change ? close_Button_text : add_Button_text"></Button>
     </header>
 </template>
 
@@ -12,14 +12,23 @@ export default {
     name:"TaskHeader",
     props: {
         title: String,
-        change_button: Boolean,
+        button_change: Boolean,
         add_Button_text: String,
         close_Button_text: String,
     },
     components: {
         Button
     },
-    emits:["toggle-header-body-tasks"]
+    emits:["toggle-header-body-tasks"],
+    computed:{
+        isHome(){
+            if(this.$route.path === "/") {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
 }
 </script>
 

@@ -8,89 +8,42 @@
 
     <br><br><br> -->
     
-    <TaskHeader @toggle-header-body-tasks="toggleAddTaskForm()" :change_button="showAddTask" title="Task Tracker" add_Button_text="Add Task" close_Button_text="Close"></TaskHeader>
-    <div v-show="showAddTask">
-      <AddTaskForm @add-task="addTask"></AddTaskForm>
-    </div>
-    <Tasks @toggle-reminder="setReminder" @delete-task="deleteTask" :tasks="tasks"></Tasks>
-    
+    <TaskHeader @toggle-header-body-tasks="toggleAddTaskForm()" :button_change="showAddTask" title="Task Tracker" add_Button_text="Add Task" close_Button_text="Close"></TaskHeader>
+    <router-view :showAddTask="showAddTask"></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
 /* tasks */
 import TaskHeader from './components/TaskHeader'
-import AddTaskForm from './components/AddTaskForm'
-import Tasks from './components/Tasks'
+
 /* markers */
 import MarkerHeader from './components/MarkerHeader'
 import AddMarkerForm from './components/AddMarkerForm'
 import Map from './components/Map'
 
+import Footer from "./components/Footer"
+import router from "./router"
+
 export default {
   name: 'App',
   components: {
-    TaskHeader,
     MarkerHeader,
-    Tasks,
-    AddTaskForm,
+    Map,
     AddMarkerForm,
-    Map
-  },
+    TaskHeader,
+    Footer,
+    router
+},
   data() {
     return {
-      tasks: [],
       showAddTask: false,
       markers: [],
       showAddMarker: false
     }
   },
   methods:{
-    async addTask(newTask){
-      const res = await fetch("http://localhost:5000/tasks", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json"
-        },
-        body: JSON.stringify(newTask)
-      })
-      const data = await res.json()
-
-      this.tasks.push(data)
-    },
-    async updateTask(id, dataToPatch){
-      const res = await fetch(`http://localhost:5000/tasks/${id}`, {
-        method:"PATCH",
-        headers:{
-          "Content-type":"application/json"
-        },
-        body: JSON.stringify(dataToPatch)
-      })
-
-      const data = await res.json()
-
-      this.tasks = this.tasks.map((task) => task.id === id ? task = data : task)
-    },
-    async deleteTask(id){
-      if(confirm("Delete?")){
-        const res = await fetch(`http://localhost:5000/tasks/${id}`, {
-          method: "DELETE"
-        })
-
-        res.status === 200 ? (this.tasks = this.tasks.filter((task) => task.id !== id)) : "Error deleting task"
-      }
-    },
-    async setReminder(id){
-        const taskToToggle = await this.getTaskById(id)
-        
-        const updTask = {
-          reminder: !taskToToggle.reminder
-        }
-
-        this.updateTask(id, updTask)
-        
-        //this.tasks = this.tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task)
-    },
     toggleAddTaskForm(){
       this.showAddTask = !this.showAddTask
     },
@@ -101,22 +54,6 @@ export default {
     toggleAddMakerForm(){
       this.showAddMarker = !this.showAddMarker
     },*/
-    async getAllTasks(){
-      const res = await fetch("http://localhost:5000/tasks")
-      const data = await res.json()
-
-      return data
-    },
-    async getTaskById(id){
-      const res = await fetch(`http://localhost:5000/tasks/${id}`)
-      const data = await res.json()
-
-      return data
-    }
-  },
-  async created(){ //on page creation do:
-    this.tasks = await this.getAllTasks()
-
   }
 }
 </script>
