@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "backend": "json-server --watch db.json --port 5000 --static: ./assets/FH4"
+    "backend": "json-server --watch db.json --port 5000 --static ./src/assets/"
   },
   "dependencies": {
     "core-js": "^3.8.3",

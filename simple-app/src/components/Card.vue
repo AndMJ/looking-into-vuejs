@@ -13,7 +13,8 @@
                     <small class="text-muted">{{car_info.type}}</small>
                 </div>
             </div>
-            <img :src="[car_info.image ? car_info.image : require('@/assets/car_thumb.png')]" class="card-img-top" alt="Car photo">
+            <!-- TODO: create fetch to json-server to get images, for status code filtering -->
+            <img :src="[car_info.image ? 'http://localhost:5000' + car_info.image : require('@/assets/car_thumb.png')]" class="card-img-top" alt="Car photo">
         </div>
     </div>
 </template>
