@@ -18,7 +18,8 @@ export default {
   data(){
     return {
       carData: [],
-      car_manu: []
+      car_manu: [],
+      inputData: null
     }
   },
   methods:{
@@ -37,6 +38,11 @@ export default {
               }
           }
           return result;
+      },
+      ByManufacturer(){
+          return data.reduce((groups, item) => ({
+              ...groups, [item.manufacturer]: [...(groups[item.manufacturer] || []), item]
+          }), {});
       },
       /* getImage(car){
           const car_name_splited = car.name.split(' ')
@@ -65,9 +71,8 @@ export default {
       }
       console.log(links_array)*/
 
-      this.carData = data.reduce((groups, item) => ({
-          ...groups, [item.manufacturer]: [...(groups[item.manufacturer] || []), item]
-      }), {});
+      //this.carData = this.ByManufacturer()
+      this.carData = data
 
       console.log(this.carData)
   }
